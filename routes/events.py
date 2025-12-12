@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template
+from models.event import Event
 
-# Blueprint oluşturuyoruz
-events_bp = Blueprint('events_bp', __name__)
+events_bp = Blueprint("events_bp", __name__)
 
-# /events route'u
-@events_bp.route('/events')
-def events_page():
-    return render_template('events.html')
+@events_bp.route("/events")
+def events():
+    event_list = Event.query.all()
+    return render_template("events.html", events=event_list)
