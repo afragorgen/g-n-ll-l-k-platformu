@@ -1,5 +1,6 @@
 from datetime import datetime
 from extensions import db
+from models.participation import participation
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -9,3 +10,10 @@ class Event(db.Model):
     location = db.Column(db.String(120), nullable=False)
     image_url = db.Column(db.String(300))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    volunteers = db.relationship(
+        "User",
+        secondary=participation,
+        backref=db.backref("joined_events", lazy="dynamic")
+    )
+
