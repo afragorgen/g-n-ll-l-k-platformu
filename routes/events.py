@@ -47,3 +47,33 @@ def create_event():
         return redirect(url_for("events_bp.events"))
 
     return render_template("event_create.html")
+
+from flask_login import login_required, current_user
+from models.participation import Participation
+from extensions import db
+from flask import flash
+
+@events_bp.route("/events/<int:event_id>/join", methods=["POST"])
+@login_required
+def join_event(event_id):
+    existing = Participation.query.filter_by(
+        user_id=current_user.id,
+        event_id=event_id
+    ).first()
+
+    if existing:
+        flash("Bu etkinliğe zaten katıldınız.", "warning")
+        return redirect(url_for("events_bp.event_detail", event_id=event_id))
+
+    participation = Participation(
+        user_id=current_user.id,
+        event_id=event_id
+    )
+
+    db.session.add(participation)
+    db.session.commit()
+
+    flash("Etkinliğe başarıyla katıldınız 🎉", "success")
+    return redirect(url_for("events_bp.event_detail", event_id=event_id))
+
+

@@ -1,8 +1,9 @@
 from datetime import datetime
 from extensions import db
-from models.participation import participation
 
 class Event(db.Model):
+    __tablename__ = "event"
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.Text, nullable=False)
@@ -11,16 +12,10 @@ class Event(db.Model):
     image_url = db.Column(db.String(300))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    volunteers = db.relationship(
-        "User",
-        secondary=participation,
-        backref=db.backref("joined_events", lazy="dynamic")
+    created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    participations = db.relationship(
+        "Participation",
+        backref="event",
+        cascade="all, delete-orphan"
     )
-    created_by_id = db.Column(
-    db.Integer,
-    db.ForeignKey("user.id"),
-    nullable=False
-)
-created_by = db.relationship("User", backref="created_events")
-
-
