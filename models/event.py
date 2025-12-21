@@ -1,6 +1,7 @@
 from datetime import datetime
 from extensions import db
 
+
 class Event(db.Model):
     __tablename__ = "event"
 
@@ -14,8 +15,4 @@ class Event(db.Model):
 
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    participations = db.relationship(
-        "Participation",
-        backref="event",
-        cascade="all, delete-orphan"
-    )
+    

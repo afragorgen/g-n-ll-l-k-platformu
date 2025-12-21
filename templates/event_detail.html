@@ -19,20 +19,20 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('events_bp.events') }}">
+                    <a class="nav-link" href="{{ url_for('events.events') }}">
                         Etkinlikler
                     </a>
                 </li>
 
                 {% if session.get("user_id") %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth_bp.logout') }}">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">
                             Çıkış Yap
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth_bp.login') }}">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">
                             Giriş Yap
                         </a>
                     </li>
@@ -51,7 +51,7 @@
         📍 <strong>Konum:</strong> {{ event.location }} <br>
         📅 <strong>Tarih:</strong> {{ event.date }}
         {% if current_user.is_authenticated %}
-    <form method="POST" action="{{ url_for('events_bp.join_event', event_id=event.id) }}">
+    <form method="POST" action="{{ url_for('events.join_event', event_id=event.id) }}">
         <button type="submit" class="btn btn-success mt-3">
             Gönüllü Ol 🤝
         </button>
@@ -76,18 +76,18 @@
     </p>
 
     {% if session.get("user_id") %}
-        <a href="{{ url_for('events_bp.join_event', event_id=event.id) }}"
+        <a href="{{ url_for('events.join_event', event_id=event.id) }}"
            class="btn btn-success">
             Gönüllü Katıl
         </a>
     {% else %}
-        <a href="{{ url_for('auth_bp.login') }}"
+        <a href="{{ url_for('auth.login') }}"
            class="btn btn-warning">
             Katılmak için giriş yap
         </a>
     {% endif %}
 
-    <a href="{{ url_for('events_bp.events') }}"
+    <a href="{{ url_for('events_list.events') }}"
        class="btn btn-secondary ms-2">
         Geri Dön
     </a>
