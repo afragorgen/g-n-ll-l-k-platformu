@@ -1,7 +1,7 @@
 from flask import Flask
 from extensions import db, login_manager
 from routes.auth import auth_bp
-from routes.events import events
+from routes.events import events_bp
 from routes.main_routes import main_bp
 from models.user import User
 import auth_loader
@@ -22,7 +22,7 @@ def load_user(user_id):
 
 app.register_blueprint(main_bp)
 app.register_blueprint(auth_bp)
-app.register_blueprint(events)
+app.register_blueprint(events_bp)
 
 with app.app_context():
     db.create_all()

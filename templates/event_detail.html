@@ -1,22 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="margin:40px;">
-    <h2>{{ event.title }}</h2>
-    <p>{{ event.description }}</p>
+<div class="card shadow">
+    <div class="card-body">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
 
-    <p><strong>Tarih:</strong> {{ event.date }}</p>
-    <p><strong>Konum:</strong> {{ event.location }}</p>
+        <hr>
 
-    {% if current_user.is_authenticated %}
-        <form method="POST" action="{{ url_for('events.join_event', event_id=event.id) }}">
-            <button type="submit">Gönüllü Ol</button>
-        </form>
-    {% else %}
-        <p>Katılmak için <a href="{{ url_for('auth.login') }}">giriş yap</a></p>
-    {% endif %}
-
-    <br>
-    <a href="{{ url_for('events.list_events') }}">← Etkinliklere Dön</a>
+        {% if current_user.is_authenticated %}
+            <form method="POST"
+                  action="{{ url_for('events.join_event', event_id=event.id) }}">
+                <button type="submit" class="btn btn-success">
+                    Gönüllü Ol
+                </button>
+            </form>
+        {% else %}
+            <p class="text-muted">
+                Gönüllü olmak için giriş yapmalısınız.
+            </p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

@@ -1,19 +1,26 @@
 {% extends "base.html" %}
+
 {% block content %}
+<h2 class="mb-4">Etkinlikler</h2>
 
-<h2>Etkinlikler</h2>
-
-{% for event in events %}
-<div style="border:1px solid #ccc; padding:15px; margin-bottom:15px;">
-    <h3>{{ event.title }}</h3>
-    <p>{{ event.description }}</p>
-    <p>📍 {{ event.location }}</p>
-    <p>📅 {{ event.date }}</p>
-
-    <a href="{{ url_for('events.event_detail', event_id=event.id) }}">
-        Detayları Gör
-    </a>
-</div>
-{% endfor %}
-
+{% if events %}
+    <div class="row">
+        {% for event in events %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="card-text">{{ event.description[:100] }}...</p>
+                        <a href="{{ url_for('events.event_detail', event_id=event.id) }}"
+                           class="btn btn-success btn-sm">
+                            Detayları Gör
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Henüz etkinlik eklenmedi.</p>
+{% endif %}
 {% endblock %}
