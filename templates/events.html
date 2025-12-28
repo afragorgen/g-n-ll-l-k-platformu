@@ -9,13 +9,30 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
+
+                        <!-- ETKİNLİK BAŞLIĞI -->
                         <h5 class="card-title">{{ event.title }}</h5>
-                        <p class="card-text">{{ event.description[:100] }}...</p>
+
+                        <!-- TARİH -->
+                        <p class="text-muted mb-1">
+                            📅 {{ event.date }}
+                        </p>
+
+                        <!-- YER -->
+                        <p class="text-muted mb-2">
+                            📍 {{ event.location }}
+                        </p>
+
+                        <!-- AÇIKLAMA -->
+                        <p class="card-text">
+                            {{ event.description[:100] }}...
+                        </p>
+
+                        <!-- DETAY BUTONU -->
                         <a href="{{ url_for('events.event_detail', event_id=event.id) }}"
                            class="btn btn-success btn-sm">
                             Detayları Gör
                         </a>
-      
 
                     </div>
                 </div>
